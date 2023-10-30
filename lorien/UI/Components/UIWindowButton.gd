@@ -4,9 +4,9 @@ class_name UIWindowButton
 signal pressed
 
 # -------------------------------------------------------------------------------------------------
-export var hover_background: Color
-export var hover_texture: Color
-export var texture: Texture
+@export var hover_background: Color
+@export var hover_texture: Color
+@export var texture: Texture2D
 
 @onready var _background: ColorRect = $ColorRect
 @onready var _texture_button: TextureButton = $TextureButton

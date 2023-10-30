@@ -43,7 +43,7 @@ func optimize() -> void:
 		var distance_cond = distance > 1.0
 	
 		# Angle between points must be beigger than x deg
-		var angle := rad2deg(prev_point.angle_to_point(point))
+		var angle := rad_to_deg(prev_point.angle_to_point(point))
 		var angle_diff = abs(abs(angle) - abs(previous_angle))
 		var angle_cond = angle_diff >= 1.0
 		previous_angle = angle

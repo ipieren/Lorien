@@ -9,4 +9,4 @@ func _draw():
 # -------------------------------------------------------------------------------------------------
 func change_size(brush_size: int) -> void:
 	_brush_size = brush_size
-	update()
+	queue_redraw()

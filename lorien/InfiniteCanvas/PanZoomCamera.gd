@@ -2,7 +2,7 @@ extends Camera2D
 
 const MAX_ZOOM_LEVEL = 100.0
 const MIN_ZOOM_LEVEL = 0.1
-const ZOOM_INCREMENT = 0.1
+const ZOOM_INCREMENT = 0.05
 
 var _current_zoom_level := 1.0
 var _pan_active := false
@@ -15,9 +15,11 @@ func _input(event):
 			var increment = max(ZOOM_INCREMENT + _current_zoom_level * ZOOM_INCREMENT, ZOOM_INCREMENT)
 			
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				_do_zoom(increment, get_local_mouse_position())
+				if event.pressed:
+					_do_zoom(increment, get_local_mouse_position())
 			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				_do_zoom(-increment, get_local_mouse_position())
+				if event.pressed:
+					_do_zoom(-increment, get_local_mouse_position())
 			elif event.button_index == MOUSE_BUTTON_MIDDLE:
 				_pan_active = event.is_pressed()
 		elif event is InputEventMouseMotion:
@@ -46,11 +48,11 @@ func _do_zoom(incr: float, zoom_anchor: Vector2) -> void:
 	zoom = Vector2(_current_zoom_level, _current_zoom_level)
 
 # -------------------------------------------------------------------------------------------------
-func enable_intput() -> void:
+func enable_input() -> void:
 	_is_input_enabled = true
 
 # -------------------------------------------------------------------------------------------------
-func disable_intput() -> void:
+func disable_input() -> void:
 	_is_input_enabled = false
 
 # -------------------------------------------------------------------------------------------------

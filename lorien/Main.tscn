@@ -1,81 +1,73 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://br13yb5dmpv2i"]
 
-[ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://InfiniteCanvas/InfiniteCanvas.tscn" type="PackedScene" id=2]
-[ext_resource path="res://UI/UIStatusbar.tscn" type="PackedScene" id=3]
-[ext_resource path="res://UI/UITitlebar.tscn" type="PackedScene" id=4]
-[ext_resource path="res://UI/UIMenuPopup.tscn" type="PackedScene" id=5]
-[ext_resource path="res://UI/UIToolbar.tscn" type="PackedScene" id=6]
+[ext_resource type="Script" path="res://Main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://InfiniteCanvas/InfiniteCanvas.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://UI/UIStatusbar.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://UI/UITitlebar.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://UI/UIMenuPopup.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://UI/UIToolbar.tscn" id="6"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.207843, 0.211765, 0.227451, 1 )
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.207843, 0.211765, 0.227451, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color( 0.207843, 0.211765, 0.227451, 1 )
+border_color = Color(0.207843, 0.211765, 0.227451, 1)
 
 [node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-canvas_color = Color( 0.309804, 0.309804, 0.309804, 1 )
+script = ExtResource("1")
+canvas_color = Color(0.309804, 0.309804, 0.309804, 1)
 
-[node name="InfiniteCanvas" parent="." instance=ExtResource( 2 )]
+[node name="InfiniteCanvas" parent="." instance=ExtResource("2")]
+layout_mode = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
 
-[node name="UITitlebar" parent="." instance=ExtResource( 4 )]
+[node name="UITitlebar" parent="." instance=ExtResource("4")]
+layout_mode = 0
+anchor_right = 0.0
 _menu_popup_path = NodePath("../UIMenuPopup")
 
-[node name="UIToolbar" parent="." instance=ExtResource( 6 )]
+[node name="UIToolbar" parent="." instance=ExtResource("6")]
+layout_mode = 0
+anchor_right = 0.0
+offset_right = 1921.0
 _file_dialog_path = NodePath("../FileDialog")
 _color_picker_path = NodePath("../ColorpickerPopup/PanelContainer/ColorPicker")
 
-[node name="UIStatusBar" parent="." instance=ExtResource( 3 )]
+[node name="UIStatusBar" parent="." instance=ExtResource("3")]
+layout_mode = 0
 anchor_top = 1.0
+anchor_right = 0.0
 anchor_bottom = 1.0
 offset_top = -23.3596
 offset_bottom = 0.640381
 
 [node name="FileDialog" type="FileDialog" parent="."]
 access = 2
-filters = PackedStringArray( "*.lorien" )
-current_dir = "/Projects/Other/lorien/lorien"
-current_file = "Lorien"
-current_path = "/Projects/Other/lorien/lorien/Lorien"
-script = null
+filters = PackedStringArray("*.lorien")
 
 [node name="ColorpickerPopup" type="Popup" parent="."]
-script = null
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PanelContainer" type="PanelContainer" parent="ColorpickerPopup"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 1 )
-script = null
-__meta__ = {
-"_edit_use_anchors_": false
-}
+theme_override_styles/panel = SubResource("1")
 
 [node name="ColorPicker" type="ColorPicker" parent="ColorpickerPopup/PanelContainer"]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 16.0
-offset_bottom = 16.0
+layout_mode = 2
 edit_alpha = false
-script = null
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="UIMenuPopup" parent="." instance=ExtResource( 5 )]
-items = [  ]
+[node name="UIMenuPopup" parent="." instance=ExtResource("5")]
 
 [connection signal="mouse_entered" from="InfiniteCanvas" to="." method="_on_InfiniteCanvas_mouse_entered"]
 [connection signal="mouse_exited" from="InfiniteCanvas" to="." method="_on_InfiniteCanvas_mouse_exited"]

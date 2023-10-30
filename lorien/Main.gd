@@ -21,6 +21,7 @@ func _ready():
 	_ui_toolbar.connect("save_file", _on_save_file)
 	_ui_toolbar.connect("brush_color_changed", _on_brush_color_changed)
 	_ui_toolbar.connect("brush_size_changed", _on_brush_size_changed)
+	_ui_toolbar.connect("grid_enabled", _on_grid_enabled)
 
 # -------------------------------------------------------------------------------------------------
 func _physics_process(delta):
@@ -38,6 +39,10 @@ func _on_brush_color_changed(color: Color) -> void:
 # -------------------------------------------------------------------------------------------------
 func _on_brush_size_changed(size: int) -> void:
 	_canvas.set_brush_size(size)
+
+# -------------------------------------------------------------------------------------------------
+func _on_grid_enabled(enabled: bool) -> void:
+	_canvas.enable_grid(enabled)
 
 # -------------------------------------------------------------------------------------------------
 func _on_clear_canvas() -> void:

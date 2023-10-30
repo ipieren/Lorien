@@ -36,5 +36,5 @@ func set_active(active: bool) -> void:
 	var new_style = STYLE_INACTIVE
 	if is_active:
 		new_style = STYLE_ACTIVE
-	set("custom_styles/panel", new_style)
+	set("theme_override_styles/panel", new_style)
 

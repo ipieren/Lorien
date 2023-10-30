@@ -3,15 +3,16 @@ extends Node
 # -------------------------------------------------------------------------------------------------
 const POINT_ELEM_SIZE = 3
 const MAX_PRESSURE_VALUE = 65535
-const COMPRESSION_METHOD = File.COMPRESSION_DEFLATE
+# const COMPRESSION_METHOD = File.COMPRESSION_DEFLATE
 
 # -------------------------------------------------------------------------------------------------
 func save_file(file_path: String, line_2d_array: Array) -> void:
-	var start_time := OS.get_ticks_msec()
+	var start_time := Time.get_ticks_msec()
 	
 	# open file
-	var file := File.new()
-	var err = file.open_compressed(file_path, File.WRITE, COMPRESSION_METHOD)
+	# var file := File.new()
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	var err = FileAccess.open_compressed(file_path, FileAccess.WRITE, FileAccess.COMPRESSION_DEFLATE)
 	if err != OK:
 		printerr("Failed to open file for writing: %s" % file_path)
 		return
@@ -20,15 +21,17 @@ func save_file(file_path: String, line_2d_array: Array) -> void:
 	_write_to_binary_file(file, line_2d_array)
 	file.close()
 	
-	print("File saved in %d ms" % (OS.get_ticks_msec() - start_time))
+	print("File saved in %d ms" % (Time.get_ticks_msec() - start_time))
 	
 # -------------------------------------------------------------------------------------------------
 func load_file(file_path: String) -> Array:
-	var start_time := OS.get_ticks_msec()
+	var start_time := Time.get_ticks_msec()
 		
 	# open file
-	var file := File.new()
-	var err = file.open_compressed(file_path, File.READ, COMPRESSION_METHOD)
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	var err = FileAccess.open_compressed(file_path, FileAccess.READ, FileAccess.COMPRESSION_DEFLATE)
+	# var file := File.new()
+	# var err = file.open_compressed(file_path, File.READ, COMPRESSION_METHOD)
 	if err != OK:
 		printerr("Failed to load file: %s" % file_path)
 		return []
@@ -37,11 +40,11 @@ func load_file(file_path: String) -> Array:
 	var result: Array = _read_from_binary_file(file)
 	file.close()
 	
-	print("Loaded %s in %d ms" % [file_path, (OS.get_ticks_msec() - start_time)])
+	print("Loaded %s in %d ms" % [file_path, (Time.get_ticks_msec() - start_time)])
 	return result
 
 # -------------------------------------------------------------------------------------------------
-func _write_to_binary_file(file: File, strokes: Array) -> void:
+func _write_to_binary_file(file: FileAccess, strokes: Array) -> void:
 	for stroke in strokes:
 		# color
 		file.store_8(stroke.color.r8)
@@ -64,7 +67,7 @@ func _write_to_binary_file(file: File, strokes: Array) -> void:
 
 # -------------------------------------------------------------------------------------------------
 # TODO: this needs some error handling!
-func _read_from_binary_file(file: File) -> Array:
+func _read_from_binary_file(file: FileAccess) -> Array:
 	var result := []
 	
 	while true:
@@ -92,7 +95,7 @@ func _read_from_binary_file(file: File) -> Array:
 		result.append(brush_stroke)
 		
 		# are we done yet?
-		if file.get_position() >= file.get_len()-1 || file.eof_reached():
+		if file.get_position() >= file.get_length()-1 || file.eof_reached():
 			break
 		
 	return result

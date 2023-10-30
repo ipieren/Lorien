@@ -9,6 +9,7 @@ signal undo_action
 signal redo_action
 signal brush_color_changed(color)
 signal brush_size_changed(size)
+signal grid_enabled(enabled)
 
 # -------------------------------------------------------------------------------------------------
 const BUTTON_HOVER_COLOR = Color.MAROON
@@ -48,7 +49,7 @@ func _on_RedoButton_pressed(): emit_signal("redo_action")
 
 func _on_OpenFileButton_pressed():
 	var file_dialog: FileDialog = get_node(_file_dialog_path)
-	file_dialog.mode = FileDialog.FILE_MODE_OPEN_FILE
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.connect("file_selected", _on_file_selected_to_open)
 	file_dialog.connect("popup_hide", _on_file_dialog_closed)
 	file_dialog.popup_centered()
@@ -60,7 +61,7 @@ func _on_file_selected_to_open(filepath: String) -> void:
 
 func _on_SaveFileButton_pressed():
 	var file_dialog: FileDialog = get_node(_file_dialog_path)
-	file_dialog.mode = FileDialog.FILE_MODE_SAVE_FILE
+	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	file_dialog.connect("file_selected", _on_file_selected_to_save)
 	file_dialog.connect("popup_hide", _on_file_dialog_closed)
 	file_dialog.popup_centered()
@@ -81,12 +82,12 @@ func _on_ColorButton_pressed():
 
 
 func _on_color_changed(color: Color) -> void:
-	_color_button.get("custom_styles/normal").bg_color = color
+	_color_button.get("theme_override_styles/normal").bg_color = color
 	
 	var text_color := color.inverted()
-	_color_button.set("custom_colors/font_color", text_color)
-	_color_button.set("custom_colors/font_color_hover", text_color)
-	_color_button.set("custom_colors/font_color_pressed", text_color)
+	_color_button.set("theme_override_colors/font_color", text_color)
+	_color_button.set("theme_override_colors/font_hover_color", text_color)
+	_color_button.set("theme_override_colors/font_pressed_color", text_color)
 	_color_button.text = color.to_html(false)
 	
 	emit_signal("brush_color_changed", color)

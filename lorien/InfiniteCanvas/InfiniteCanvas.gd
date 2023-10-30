@@ -13,9 +13,10 @@ class Info:
 
 # -------------------------------------------------------------------------------------------------
 #onready var _viewport: Viewport = $Viewport
-@onready var _line2d_container: Node2D = $Viewport/Strokes
-@onready var _camera: Camera2D = $Viewport/Camera2D
-@onready var _cursor: Node2D = $Viewport/BrushCursor
+@onready var _line2d_container: Node2D = $SubViewport/Strokes
+@onready var _camera: Camera2D = $SubViewport/Camera2D
+@onready var _cursor: Node2D = $SubViewport/BrushCursor
+@onready var _grid: InfiniteCanvasGrid = $SubViewport/Grid
 
 @export var pressure_curve: Curve
 var _current_line_2d: Line2D
@@ -36,7 +37,9 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		info.current_pressure = event.pressure
 		_last_mouse_motion = event
-		_cursor.global_position = _camera.xform(event.global_position)
+	# 	_cursor.global_position = _camera * (event.global_position)
+		# _cursor.global_position = event.global_position
+		_cursor.global_position = get_local_mouse_position()
 	if _is_enabled:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_LEFT:
@@ -51,12 +54,16 @@ func _physics_process(delta: float) -> void:
 		var brush_position: Vector2
 		
 		if _last_mouse_motion != null:
-			brush_position = _camera.xform(_last_mouse_motion.global_position)
+			# brush_position =  _camera*(_last_mouse_motion.global_position)
+			# brush_position = _camera.get_screen_center_position()
+			# brush_position = _last_mouse_motion.global_position
+			# brush_position = _last_mouse_motion.global_position
+			brush_position = get_local_mouse_position()
 			info.current_brush_position = brush_position
 		
 		if _current_line_2d != null && _last_mouse_motion != null:
 			var pressure = _last_mouse_motion.pressure
-			pressure = pressure_curve.interpolate(pressure)
+			pressure = pressure_curve.sample(pressure)
 			add_point(brush_position, pressure)
 			_last_mouse_motion = null
 		
@@ -69,7 +76,7 @@ func _make_empty_line2d() -> Line2D:
 	line.width_curve = Curve.new()
 	line.begin_cap_mode = Line2D.LINE_CAP_ROUND
 	line.end_cap_mode = Line2D.LINE_CAP_ROUND
-	line.joint_mode = Line2D.LINE_CAP_ROUND
+	line.joint_mode = Line2D.LINE_JOINT_ROUND
 	line.antialiased = true 
 	#line.texture = STROKE_TEXTURE
 	#line.texture_mode = Line2D.LINE_TEXTURE_STRETCH
@@ -78,14 +85,14 @@ func _make_empty_line2d() -> Line2D:
 # -------------------------------------------------------------------------------------------------
 func enable() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	_camera.enable_intput()
+	_camera.enable_input()
 	_cursor.show()
 	_is_enabled = true
 	
 # -------------------------------------------------------------------------------------------------
 func disable() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_camera.disable_intput()
+	_camera.disable_input()
 	_cursor.hide()
 	_is_enabled = false
 
@@ -168,6 +175,11 @@ func set_brush_size(size: int) -> void:
 func get_camera_zoom() -> float:
 	return _camera.zoom.x
 
+
+# -------------------------------------------------------------------------------------------------
+func get_camera_offset() -> Vector2:
+	return _camera.offset
+
 # -------------------------------------------------------------------------------------------------
 func clear() -> void:
 	for l in _line2d_container.get_children():
@@ -176,3 +188,6 @@ func clear() -> void:
 	info.stroke_count = 0
 	_brush_strokes.clear()
 
+
+func enable_grid(e: bool) -> void:
+	_grid.enable(e)
