@@ -2,22 +2,21 @@ class_name InfiniteCanvasGrid
 extends Node2D
 
 # -------------------------------------------------------------------------------------------------
-const COLOR = Color.RED
-
+const COLOR := Color.RED
 
 # -------------------------------------------------------------------------------------------------
 @export var camera_path: NodePath
 var _enabled: bool
 var _camera: Camera2D
 var _grid_size := Config.DEFAULT_GRID_SIZE
-var _grid_color: Color = COLOR
+var _grid_color: Color
 
 # -------------------------------------------------------------------------------------------------
 func _ready():
 	_camera = get_node(camera_path)
-	# _camera.connect("zoom_changed", self, "_on_zoom_changed")
-	# _camera.connect("position_changed", self, "_on_position_changed")
-	# get_viewport().connect("size_changed", self, "_on_viewport_size_changed")
+	_camera.connect("zoom_changed", Callable(self, "_on_zoom_changed"))
+	_camera.connect("position_changed", Callable(self, "_on_position_changed"))
+	get_viewport().connect("size_changed", Callable(self, "_on_viewport_size_changed"))
 
 # -------------------------------------------------------------------------------------------------
 func enable(e: bool) -> void:
@@ -30,17 +29,22 @@ func _on_position_changed(pos: Vector2) -> void: queue_redraw()
 func _on_viewport_size_changed() -> void: queue_redraw()
 
 # -------------------------------------------------------------------------------------------------
+func set_grid_size(size: int) -> void:
+	_grid_size = size
+	queue_redraw()
+
+# -------------------------------------------------------------------------------------------------
 func set_canvas_color(c: Color) -> void:
 	_grid_color = c * 1.25
 
 # -------------------------------------------------------------------------------------------------
 func set_grid_scale(size: float):
-	_grid_size = Config.DEFAULT_GRID_SIZE * size
+	_grid_size *= size
 	queue_redraw()
 
 # -------------------------------------------------------------------------------------------------
 func _draw() -> void:
-	var size = get_viewport().size  * _camera.zoom
+	var size = Vector2(get_viewport().size)  * _camera.zoom
 	var zoom = _camera.zoom.x
 	var offset = _camera.offset
 	
