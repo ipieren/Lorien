@@ -81,6 +81,7 @@ static func load_project(project: Project) -> void:
 	while true:
 		# Type
 		var type := file.get_8()
+		printerr(type)
 		
 		match type:
 			TYPE_BRUSH_STROKE, TYPE_ERASER_STROKE_DEPRECATED:
@@ -111,7 +112,7 @@ static func load_project(project: Project) -> void:
 				else:
 					project.strokes.append(brush_stroke)
 			_:
-				printerr("Invalid type")
+				printerr("Invalid type in serializer")
 		
 		# are we done yet?
 		if file.get_position() >= file.get_length()-1 || file.eof_reached():

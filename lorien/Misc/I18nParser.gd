@@ -95,6 +95,7 @@ func _get_i18n_files() -> Array:
 	var files := []
 	var dir = DirAccess.open(I18N_FOLDER)
 	var err = DirAccess.make_dir_absolute(I18N_FOLDER)
+	printerr(err)
 	if err == OK:
 		dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		var file_name = dir.get_next()

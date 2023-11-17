@@ -69,6 +69,7 @@ func save_all_projects() -> void:
 # -------------------------------------------------------------------------------------------------
 func _load_project(project: Project) -> void:
 	if !project.loaded:
+		printerr("loading project")
 		Serializer.load_project(project)
 		project.loaded = true
 	else:
