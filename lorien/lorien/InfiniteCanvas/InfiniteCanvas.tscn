@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://pj4pn7wnr8ma"]
+[gd_scene load_steps=19 format=3 uid="uid://pj4pn7wnr8ma"]
 
 [ext_resource type="Script" path="res://InfiniteCanvas/InfiniteCanvas.gd" id="1"]
 [ext_resource type="Script" path="res://InfiniteCanvas/PanZoomCamera.gd" id="2"]
 [ext_resource type="Curve" path="res://InfiniteCanvas/pressure_curve.tres" id="3"]
 [ext_resource type="PackedScene" uid="uid://ba40iu1vu8lrq" path="res://InfiniteCanvas/Cursor/BrushCursor/BrushCursor.tscn" id="4"]
 [ext_resource type="Script" path="res://InfiniteCanvas/Tools/BrushTool.gd" id="5"]
+[ext_resource type="Script" path="res://InfiniteCanvas/Tools/TriangleTool.gd" id="5_ah5r1"]
 [ext_resource type="Script" path="res://InfiniteCanvas/Tools/LineTool.gd" id="6"]
 [ext_resource type="Script" path="res://InfiniteCanvas/Tools/SelectionTool.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://benadch7n1df0" path="res://InfiniteCanvas/Cursor/SelectionCursor/SelectionCursor.tscn" id="8"]
@@ -15,6 +16,10 @@
 [ext_resource type="Script" path="res://InfiniteCanvas/Tools/CircleTool.gd" id="13"]
 [ext_resource type="Script" path="res://InfiniteCanvas/Tools/EraserTool.gd" id="14"]
 [ext_resource type="Script" path="res://InfiniteCanvas/DebugDraw.gd" id="15"]
+
+[sub_resource type="Curve" id="Curve_k8yc0"]
+_data = [Vector2(0.0291262, 0.231579), 0.0, 0.0, 0, 0, Vector2(0.587379, 0.421053), 1.65213, 1.65213, 0, 0, Vector2(1, 0.989474), 2.71053, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j70p3"]
 shader = ExtResource("10")
@@ -54,6 +59,11 @@ cursor_path = NodePath("../SubViewport/BrushCursor")
 [node name="RectangleTool" type="Node" parent="SubviewportContainer"]
 script = ExtResource("11")
 pressure_curve = ExtResource("3")
+cursor_path = NodePath("../SubViewport/BrushCursor")
+
+[node name="TriangleTool" type="Node" parent="SubviewportContainer"]
+script = ExtResource("5_ah5r1")
+pressure_curve = SubResource("Curve_k8yc0")
 cursor_path = NodePath("../SubViewport/BrushCursor")
 
 [node name="CircleTool" type="Node" parent="SubviewportContainer"]

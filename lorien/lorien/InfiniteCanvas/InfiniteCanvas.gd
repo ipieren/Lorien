@@ -8,6 +8,7 @@ const PLAYER = preload("res://Misc/Player/Player.tscn")
 # -------------------------------------------------------------------------------------------------
 @onready var _brush_tool: BrushTool = $SubviewportContainer/BrushTool
 @onready var _rectangle_tool: RectangleTool = $SubviewportContainer/RectangleTool
+@onready var _triangle_tool : TriangleTool = $SubviewportContainer/TriangleTool
 @onready var _line_tool: LineTool = $SubviewportContainer/LineTool
 @onready var _circle_tool: CircleTool = $SubviewportContainer/CircleTool
 @onready var _eraser_tool: EraserTool = $SubviewportContainer/EraserTool
@@ -113,6 +114,9 @@ func use_tool(tool_type: int) -> void:
 			_use_optimizer = true
 		Types.Tool.RECTANGLE:
 			_active_tool = _rectangle_tool
+			_use_optimizer = false
+		Types.Tool.TRIANGLE:
+			_active_tool = _triangle_tool
 			_use_optimizer = false
 		Types.Tool.CIRCLE:
 			_active_tool = _circle_tool

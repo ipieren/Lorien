@@ -1,6 +1,5 @@
 class_name TriangleTool
 extends CanvasTool
-
 # -------------------------------------------------------------------------------------------------
 const PRESSURE := 0.5
 
@@ -36,15 +35,18 @@ func _make_triangle(pressure: float) -> void:
 	var bottom_right_point := _cursor.global_position
 	var height := bottom_right_point.y - _start_position_top_left.y
 	var width := bottom_right_point.x - _start_position_top_left.x
+	var top_right_point := _start_position_top_left + Vector2(width, 0)
+	var bottom_left_point := _start_position_top_left + Vector2(0, height)
 
-    # triangle points
+	# triangle points
 	var triangle_top := _start_position_top_left + Vector2(width/2, 0)
-	var triangle_left_bottom := _start_position_top_left + Vector2(width, 0)
-	var triangle_right_bottom := _start_position_top_left + Vector2(0, height)
+	var triangle_left_bottom := bottom_left_point
+	var triangle_right_bottom := bottom_right_point
 	
-	var w_offset := width*0.02
-	var h_offset := height*0.02
-    
+	var w_offset := width*0.02*0
+	var h_offset := height*0.02*0
+	
 	add_subdivided_line(triangle_top, triangle_left_bottom, pressure)
 	add_subdivided_line(triangle_left_bottom, triangle_right_bottom - Vector2(0, h_offset), pressure)
 	add_subdivided_line(triangle_top, triangle_right_bottom + Vector2(w_offset, 0), pressure)
+
