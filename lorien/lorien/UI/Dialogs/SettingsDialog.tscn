@@ -1,0 +1,398 @@
+[gd_scene load_steps=8 format=3 uid="uid://em4qucitmb2x"]
+
+[ext_resource type="Script" path="res://UI/Dialogs/SettingsDialog.gd" id="2"]
+[ext_resource type="Script" path="res://UI/Components/DelayedSpinBox.gd" id="3"]
+[ext_resource type="Script" path="res://UI/Components/KeyBindingsList.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://ci7pxptla7jcd" path="res://UI/Dialogs/AddKeyDialog.tscn" id="5"]
+
+[sub_resource type="StyleBoxEmpty" id="1"]
+
+[sub_resource type="StyleBoxEmpty" id="3"]
+
+[sub_resource type="StyleBoxEmpty" id="2"]
+
+[node name="SettingsDialog" type="Control"]
+custom_minimum_size = Vector2(512, 300)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
+
+[node name="AddKeyDialog" parent="." instance=ExtResource("5")]
+visible = false
+
+[node name="ConfirmRebind" type="ConfirmationDialog" parent="AddKeyDialog"]
+dialog_autowrap = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="General" type="Control" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/General"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("1")
+
+[node name="PressureSensitivity" type="HBoxContainer" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/General/VBoxContainer/PressureSensitivity"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_PRESSURE_SENSITIVITY"
+
+[node name="PressureSensitivity" type="SpinBox" parent="MarginContainer/TabContainer/General/VBoxContainer/PressureSensitivity"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 0.1
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="DefaultBrushSize" type="HBoxContainer" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/General/VBoxContainer/DefaultBrushSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_BRUSH_SIZE"
+
+[node name="DefaultBrushSize" type="SpinBox" parent="MarginContainer/TabContainer/General/VBoxContainer/DefaultBrushSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 1.0
+value = 12.0
+allow_greater = true
+
+[node name="DefaultSaveDir" type="HBoxContainer" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/General/VBoxContainer/DefaultSaveDir"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_PROJECT_FOLDER"
+
+[node name="DefaultSaveDir" type="LineEdit" parent="MarginContainer/TabContainer/General/VBoxContainer/DefaultSaveDir"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "e.g. C:/Users/me/Lorien"
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Language" type="HBoxContainer" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/General/VBoxContainer/Language"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_LANGUAGE"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/TabContainer/General/VBoxContainer/Language"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("3")
+
+[node name="RestartLabel" type="Label" parent="MarginContainer/TabContainer/General/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.470588, 0.470588, 1)
+text = "SETTINGS_RESTART_NOTICE"
+
+[node name="Appearance" type="Control" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Appearance"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("1")
+
+[node name="Theme" type="HBoxContainer" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/Theme"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_THEME"
+
+[node name="Theme" type="OptionButton" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/Theme"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 1
+popup/item_0/text = "Dark"
+popup/item_0/id = 0
+
+[node name="UIScale" type="HBoxContainer" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/UIScale"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_UI_SCALE"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/UIScale"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="UIScaleOptions" type="OptionButton" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/UIScale/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 2
+popup/item_0/text = "Auto"
+popup/item_0/id = 0
+popup/item_1/text = "Custom"
+popup/item_1/id = 1
+
+[node name="UIScale" type="SpinBox" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/UIScale/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 0.5
+max_value = 2.5
+step = 0.1
+value = 1.0
+script = ExtResource("3")
+
+[node name="CanvasColor" type="HBoxContainer" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/CanvasColor"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_CANVAS_COLOR"
+
+[node name="CanvasColor" type="ColorPickerButton" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/CanvasColor"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("2")
+theme_override_styles/pressed = SubResource("2")
+theme_override_styles/hover = SubResource("2")
+theme_override_styles/disabled = SubResource("2")
+theme_override_styles/focus = SubResource("2")
+flat = true
+color = Color(0.12549, 0.129412, 0.141176, 1)
+edit_alpha = false
+
+[node name="GridPattern" type="HBoxContainer" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/GridPattern"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_GRID_PATTERN"
+
+[node name="GridPattern" type="OptionButton" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/GridPattern"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 2
+popup/item_0/text = "Dots"
+popup/item_0/id = 0
+popup/item_1/text = "Lines"
+popup/item_1/id = 1
+
+[node name="GridSize" type="HBoxContainer" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/GridSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_GRID_SIZE"
+
+[node name="GridSize" type="SpinBox" parent="MarginContainer/TabContainer/Appearance/VBoxContainer/GridSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 8.0
+max_value = 256.0
+value = 25.0
+allow_greater = true
+
+[node name="HSeparator5" type="HSeparator" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("1")
+
+[node name="RestartLabel" type="Label" parent="MarginContainer/TabContainer/Appearance/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.470588, 0.470588, 1)
+text = "SETTINGS_RESTART_NOTICE"
+
+[node name="Rendering" type="Control" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Rendering"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("1")
+
+[node name="AntiAliasing" type="HBoxContainer" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/AntiAliasing"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_AA_METHOD"
+
+[node name="AntiAliasing" type="OptionButton" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/AntiAliasing"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 3
+popup/item_0/text = "Texture Fill"
+popup/item_0/id = 0
+popup/item_1/text = "OpenGL Hint"
+popup/item_1/id = 1
+popup/item_2/text = "None"
+popup/item_2/id = 2
+
+[node name="BrushRounding" type="HBoxContainer" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/BrushRounding"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_BRUSH_CAPS"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/BrushRounding"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+popup/item_0/text = "Round"
+popup/item_0/id = 0
+popup/item_1/text = "Flat"
+popup/item_1/id = 1
+
+[node name="MaxFramerate" type="HBoxContainer" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/MaxFramerate"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_FPS_FOREGROUND"
+
+[node name="MaxFramerate" type="SpinBox" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/MaxFramerate"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 1.0
+max_value = 1000.0
+value = 144.0
+allow_greater = true
+
+[node name="BackgroundFramerate" type="HBoxContainer" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/BackgroundFramerate"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "SETTINGS_FPS_BACKGROUND"
+
+[node name="BackgroundFramerate" type="SpinBox" parent="MarginContainer/TabContainer/Rendering/VBoxContainer/BackgroundFramerate"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 5.0
+max_value = 1000.0
+value = 10.0
+allow_greater = true
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("1")
+
+[node name="RestartLabel" type="Label" parent="MarginContainer/TabContainer/Rendering/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.470588, 0.470588, 1)
+text = "SETTINGS_RESTART_NOTICE"
+
+[node name="Keybindings" type="Control" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("4")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/Keybindings"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 12.0
+
+[node name="KeyBindingsList" type="GridContainer" parent="MarginContainer/TabContainer/Keybindings/ScrollContainer"]
+layout_mode = 2
+columns = 3
+
+[connection signal="confirmed" from="AddKeyDialog/ConfirmRebind" to="AddKeyDialog" method="_on_ConfirmRebind_confirmed"]
+[connection signal="gui_input" from="MarginContainer/TabContainer/Appearance/VBoxContainer/UIScale/HBoxContainer/UIScale" to="MarginContainer/TabContainer/Appearance/VBoxContainer/UIScale/HBoxContainer/UIScale" method="_on_UIScale_gui_input"]
