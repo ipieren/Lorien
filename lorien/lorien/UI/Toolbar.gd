@@ -31,6 +31,7 @@ const BUTTON_NORMAL_COLOR = Color.WHITE
 @onready var _fullscreen_btn: FlatTextureButton = $Console/Right/FullscreenButton
 @onready var _tool_btn_brush: FlatTextureButton = $Console/Left/BrushToolButton
 @onready var _tool_btn_rectangle: FlatTextureButton = $Console/Left/RectangleToolButton
+@onready var _tool_btn_triangle : FlatTextureButton = $Console/Left/TriangleToolButton
 @onready var _tool_btn_circle: FlatTextureButton = $Console/Left/CircleToolButton
 @onready var _tool_btn_line: FlatTextureButton = $Console/Left/LineToolButton
 @onready var _tool_btn_eraser: FlatTextureButton = $Console/Left/EraserToolButton
@@ -61,6 +62,7 @@ func enable_tool(tool_type: int) -> void:
 		Types.Tool.ERASER: btn = _tool_btn_eraser
 		Types.Tool.SELECT: btn = _tool_btn_selection
 		Types.Tool.RECTANGLE: btn = _tool_btn_rectangle
+		Types.Tool.TRIANGLE: btn = _tool_btn_triangle
 		Types.Tool.CIRCLE: btn = _tool_btn_circle
 	
 	btn.toggle()
@@ -130,6 +132,11 @@ func _on_BrushToolButton_pressed():
 func _on_RectangleToolButton_pressed() -> void:
 	_change_active_tool_button(_tool_btn_rectangle)
 	emit_signal("tool_changed", Types.Tool.RECTANGLE)
+
+# -------------------------------------------------------------------------------------------------
+func _on_TriangleToolButton_pressed() -> void:
+	_change_active_tool_button(_tool_btn_triangle)
+	emit_signal("tool_changed", Types.Tool.TRIANGLE)
 
 # -------------------------------------------------------------------------------------------------
 func _on_CircleToolButton_pressed():

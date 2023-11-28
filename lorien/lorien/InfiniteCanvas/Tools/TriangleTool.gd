@@ -1,4 +1,4 @@
-class_name RectangleTool
+class_name TriangleTool
 extends CanvasTool
 
 # -------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ func tool_event(event: InputEvent) -> void:
 		if performing_stroke:
 			_cursor.set_pressure(event.pressure)
 			remove_all_stroke_points()
-			_make_rectangle(PRESSURE)
+			_make_triangle(PRESSURE)
 		
 	# Start + End
 	elif event is InputEventMouseButton:
@@ -24,34 +24,27 @@ func tool_event(event: InputEvent) -> void:
 			if event.pressed:
 				start_stroke()
 				_start_position_top_left = _cursor.global_position
-				_make_rectangle(PRESSURE)
+				_make_triangle(PRESSURE)
 			elif !event.pressed && performing_stroke:
 				remove_all_stroke_points()
-				_make_rectangle(PRESSURE)
+				_make_triangle(PRESSURE)
 				end_stroke()
 
 # -------------------------------------------------------------------------------------------------
-func _make_rectangle(pressure: float) -> void:
+func _make_triangle(pressure: float) -> void:
 	pressure = pressure_curve.sample(pressure)
 	var bottom_right_point := _cursor.global_position
 	var height := bottom_right_point.y - _start_position_top_left.y
 	var width := bottom_right_point.x - _start_position_top_left.x
-	var top_right_point := _start_position_top_left + Vector2(width, 0)
-	var bottom_left_point := _start_position_top_left + Vector2(0, height)
-	
-	var w_offset := width*0.002
-	var h_offset := height*0.002
-	add_subdivided_line(_start_position_top_left, top_right_point - Vector2(w_offset, 0), pressure)
-	add_subdivided_line(top_right_point, bottom_right_point - Vector2(0, h_offset), pressure)
-	add_subdivided_line(bottom_right_point, bottom_left_point + Vector2(w_offset, 0), pressure)
-	add_subdivided_line(bottom_left_point, _start_position_top_left + Vector2(0, h_offset), pressure)
 
+    # triangle points
 	var triangle_top := _start_position_top_left + Vector2(width/2, 0)
-	var triangle_left_bottom := bottom_left_point
-	var triangle_right_bottom := bottom_right_point
-
-	# testing triangle subdivided lines
-	# add_subdivided_line(triangle_top, triangle_left_bottom, pressure)
-	# add_subdivided_line(triangle_left_bottom, triangle_right_bottom, pressure)
-	# add_subdivided_line(triangle_top, triangle_right_bottom, pressure)
-
+	var triangle_left_bottom := _start_position_top_left + Vector2(width, 0)
+	var triangle_right_bottom := _start_position_top_left + Vector2(0, height)
+	
+	var w_offset := width*0.02
+	var h_offset := height*0.02
+    
+	add_subdivided_line(triangle_top, triangle_left_bottom, pressure)
+	add_subdivided_line(triangle_left_bottom, triangle_right_bottom - Vector2(0, h_offset), pressure)
+	add_subdivided_line(triangle_top, triangle_right_bottom + Vector2(w_offset, 0), pressure)

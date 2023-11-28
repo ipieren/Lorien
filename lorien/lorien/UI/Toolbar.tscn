@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bro2sug12l4bp"]
+[gd_scene load_steps=22 format=3 uid="uid://bro2sug12l4bp"]
 
 [ext_resource type="Texture2D" uid="uid://gcvc5f6seh8a" path="res://Assets/Icons/save_file.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://dpaofpbn0fdsa" path="res://Assets/Icons/open_file.png" id="2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://UI/Components/FlatTextureButton.gd" id="13"]
 [ext_resource type="Theme" uid="uid://2j7q70cs0j70" path="res://UI/Themes/theme_dark.tres" id="15"]
 [ext_resource type="Texture2D" uid="uid://b0357cusqaj3j" path="res://Assets/Icons/selection_tool.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://oi3nmb6m28j0" path="res://Assets/Icons/triangle_tool.png" id="16_xuxyx"]
 [ext_resource type="Texture2D" uid="uid://p4kk1owxfgw0" path="res://Assets/Icons/fullscreen.png" id="18"]
 [ext_resource type="Texture2D" uid="uid://df65t61nanoyt" path="res://Assets/Icons/circle_tool.png" id="19"]
 
@@ -152,6 +153,12 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
+[node name="TriangleToolButton" type="TextureButton" parent="Console/Left"]
+layout_mode = 2
+texture_normal = ExtResource("16_xuxyx")
+stretch_mode = 3
+script = ExtResource("13")
+
 [node name="CircleToolButton" type="TextureButton" parent="Console/Left"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -263,6 +270,7 @@ theme_override_styles/separator = SubResource("2")
 [connection signal="pressed" from="Console/Left/RedoButton" to="." method="_on_RedoButton_pressed"]
 [connection signal="pressed" from="Console/Left/BrushToolButton" to="." method="_on_BrushToolButton_pressed"]
 [connection signal="pressed" from="Console/Left/RectangleToolButton" to="." method="_on_RectangleToolButton_pressed"]
+[connection signal="pressed" from="Console/Left/TriangleToolButton" to="." method="_on_TriangleToolButton_pressed"]
 [connection signal="pressed" from="Console/Left/CircleToolButton" to="." method="_on_CircleToolButton_pressed"]
 [connection signal="pressed" from="Console/Left/LineToolButton" to="." method="_on_LineToolButton_pressed"]
 [connection signal="pressed" from="Console/Left/EraserToolButton" to="." method="_on_EraserToolButton_pressed"]
